@@ -83,5 +83,7 @@
 	<classpathentry kind="lib" path="D:/13_Sep_2023_8-30AM/selenium jars/lib/opentelemetry-semconv-1.28.0-alpha.jar"/>
 	<classpathentry kind="lib" path="D:/13_Sep_2023_8-30AM/selenium jars/lib/reactive-streams-1.0.4.jar"/>
 	<classpathentry kind="lib" path="D:/13_Sep_2023_8-30AM/selenium jars/lib/slf4j-api-2.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MINDQ/Downloads/extentreports-2.41.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MINDQ/Downloads/freemarker-2.3.23.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

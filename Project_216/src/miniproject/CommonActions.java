@@ -1,4 +1,4 @@
-package library;
+package miniproject;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Set;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -33,14 +34,12 @@ public class CommonActions
 {
 	
 	protected WebDriver driver;
-	String url="http://facebook.com";
+	String url="https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 	WebDriverWait wait;
 	int windowHeight=1024;
 	int  windowWidth=768;
 	int timeinsec=100;
 	String Mainwindow;
-	
-	
 	/*
 	 * Launch Browser [chrome,firefox,ie]
 	 */
@@ -99,25 +98,23 @@ public class CommonActions
 	
 	
 	//SetupBrowser
-	public WebDriver setupchrome()
+	public void setupchrome()
 	{
 		launchBrowser("chrome");
 		LoadPage(url);
 		managewindow(windowWidth, windowHeight);
 		implicttimeout(timeinsec);
 		explicitwait(timeinsec);
-		return driver;
 	}
 	
 	//SetupBrowser
-	public WebDriver setupfirefox()
+	public void setupfirefox()
 	{
 		launchBrowser("firefox");
 		LoadPage(url);
 		managewindow(windowWidth, windowHeight);
 		implicttimeout(timeinsec);
 		explicitwait(timeinsec);
-		return driver;
 	}
 	
 	
@@ -156,29 +153,14 @@ public class CommonActions
 	public void typetext(String xpath,String input)
 	{
 		try {
-			wait.until(ExpectedConditions
-					.visibilityOfElementLocated(By.xpath(xpath))).sendKeys(input);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//Send Text to Editbox/Textbox/Entrybox using default method
-	public void typetext(By loc,String input)
-	{
-		try {
 			wait.until(ExpectedConditions.
-					visibilityOfElementLocated(loc)).sendKeys(input);
+					visibilityOfElementLocated(By.xpath(xpath))).sendKeys(input);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
-	
-	
-	
-	//Send Text to Editbox/Textbox/Entrybox using keyboard action
+	//Send Text to Editbox/Textbox/Entrybox using mouse action
 	public void sendkeystoTextbox(String xpath,String input)
 	{
 		try {
@@ -278,6 +260,18 @@ public class CommonActions
 			new Select(Waitforvisible(xpath)).selectByVisibleText(optionname);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	
+	//Clear Text from Editbox
+	public void Cleartext(String Xpath)
+	{
+		try {
+			driver.findElement(By.xpath(Xpath)).clear();
+			verify_inputPresented_At_Textbox(Xpath, "");
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 	
@@ -410,7 +404,11 @@ public class CommonActions
 		new Actions(driver).sendKeys(Src, key).perform();
 	}
 	
-
+	/*
+	 * KeyWord:--> Capture Screen
+	 * Author:--> SunilReddy
+	 * Parameters Used:-->  Local Parameter
+	 */
 	/*
 	 * KeyWord:--> CaptureScreen
 	 * Author:--> SunilReddy
@@ -418,10 +416,18 @@ public class CommonActions
 	 */
 	public void capturescreen(String imagename)
 	{
-		
+		//Get System Default Time
+		Date date=new Date();    //import java.util;
+		//create simple dataformat
+		DateFormat df=new SimpleDateFormat("yyyy/MMM/dd/ hh-mm-ss");
+		//Cover default system date using date formatter
+		String time=df.format(date);
+				
+				
 		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileHandler.copy(src, new File("Screens\\"+imagename+".png"));
+			FileHandler.createDir(new File("Screens"));
+			FileHandler.copy(src, new File("Screens\\"+time+imagename+".png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
